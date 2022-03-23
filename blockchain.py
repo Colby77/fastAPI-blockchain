@@ -46,8 +46,20 @@ class Blockchain:
         previous_block = self.get_previous_block()
         previous_proof = previous_block["proof"]
         index = len(self.chain) + 1
-        proof = None
-        pass
+        proof = self.proof_of_work(previous_proof, index, data)
+        previous_hash = self._hash(block=previous_block)
+        block = self.create_block(
+            data=data, proof=proof, previous_hash=previous_hash, index=index)
+        self.chain.append(block)
+        return block
+        
+    def _hash(self, block: dict):
+        """
+        Hashes a block and returns the hash value of the block
+        """
+        encoded_block = json.dumps(block, sort_keys=True).encode()
+
+        return hashlib.sha256(encoded_block).hexdigest()
 
     def check_proof(self, new_proof: int, previous_proof: int, index: str, data: str):
         check = str(new_proof ** 2 - previous_proof ** 2 + index) + data
@@ -59,6 +71,7 @@ class Blockchain:
         proof_checked = False
 
         while not proof_checked:
+            print(new_proof)
             checked_proof = self.check_proof(
                 new_proof=new_proof, 
                 previous_proof=previous_proof, 
@@ -70,6 +83,8 @@ class Blockchain:
                 proof_checked = True
             else:
                 new_proof += 1
+            
+        return new_proof
 
     def get_previous_block(self):
         return self.chain[-1]
