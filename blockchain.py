@@ -42,6 +42,38 @@ class Blockchain:
             data='The first block', proof=1, previous_hash='0', index=1)
         self.chain.append(genesis_block)
 
+    def mine_block(self, data: str):
+        previous_block = self.get_previous_block()
+        previous_proof = previous_block["proof"]
+        index = len(self.chain) + 1
+        proof = None
+        pass
+
+    def check_proof(self, new_proof: int, previous_proof: int, index: str, data: str):
+        check = str(new_proof ** 2 - previous_proof ** 2 + index) + data
+
+        return check.encode()
+
+    def proof_of_work(self, previous_proof: str, index: int, data: str):
+        new_proof = 1
+        proof_checked = False
+
+        while not proof_checked:
+            checked_proof = self.check_proof(
+                new_proof=new_proof, 
+                previous_proof=previous_proof, 
+                index=index, 
+                data=data)
+            hash_value = hashlib.sha256(checked_proof).hexdigest()
+
+            if hash_value[:4] == '0000':
+                proof_checked = True
+            else:
+                new_proof += 1
+
+    def get_previous_block(self):
+        return self.chain[-1]
+
     def create_block(self, data: str, proof: int, previous_hash: str, index: int):
         block = {
             "index": index,
@@ -52,3 +84,5 @@ class Blockchain:
         }
 
         return block
+
+    
