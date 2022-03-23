@@ -43,7 +43,7 @@ class Blockchain:
         """
         self.chain = list()
         genesis_block = self.create_block(
-            data='The first block', proof=1, previous_hash='0', index=1)
+            data='This is the genesis block', proof=1, previous_hash='0', index=1)
         self.chain.append(genesis_block)
 
     def mine_block(self, data: str):
@@ -166,6 +166,6 @@ class Blockchain:
                 return False
 
             current_block = next_block
-            block_index +=1
+            block_index += 1
 
-            return True
+        return True
