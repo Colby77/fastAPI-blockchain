@@ -1,10 +1,13 @@
 anyio==3.5.0
+asgiref==3.5.0
 asttokens==2.0.5
 backcall==0.2.0
+click==8.0.4
 colorama==0.4.4
 decorator==5.1.1
 executing==0.8.3
 fastapi==0.75.0
+h11==0.13.0
 idna==3.3
 ipython==8.1.1
 jedi==0.18.1
@@ -21,4 +24,5 @@ stack-data==0.2.0
 starlette==0.17.1
 traitlets==5.1.1
 typing_extensions==4.1.1
+uvicorn==0.17.6
 wcwidth==0.2.5
