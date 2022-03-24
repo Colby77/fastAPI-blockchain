@@ -20,7 +20,7 @@ def mine_block(data: str):
         return block
 
 # return the whole blockchain
-@app.get('/blockchain/')
+@app.get('/blockchain')
 def get_blockchain():
     if not bc.is_chain_valid():
         return HTTPException(
@@ -29,3 +29,19 @@ def get_blockchain():
     else:
         chain = bc.chain
         return chain
+
+
+# return previous block
+@app.get('/previous_block')
+def get_previous_block():
+    if not bc.is_chain_valid():
+        return HTTPException(
+            status_code=400, 
+            detail='Blockchain is invalid')
+    else:
+        return bc.get_previous_block()
+
+
+@app.get('/validate')
+def is_valid():
+    return bc.is_chain_valid()
